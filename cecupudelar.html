@@ -1,0 +1,3477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Estudiantes CECUP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --text-light: #6c757d;
+            --bg-light: #f1f5f9;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(74, 111, 165, 0.95);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .admin-login {
+            background-color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-left: 30px;
+        }
+
+        .admin-login:hover {
+            background-color: #0d4b6e;
+            color: white !important;
+        }
+
+        .logout-btn {
+            background-color: var(--danger-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-left: 30px;
+            display: none;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+            color: white !important;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Portada Completa Mejorada */
+        .full-cover {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .full-cover h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--accent-color); }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--accent-color); }
+        }
+
+        .full-cover p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: #3da8d8;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #0d4b6e;
+        }
+
+        /* Efecto de partículas */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Botón para cambiar imagen (solo visible en modo admin) */
+        .change-cover-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+            transition: var(--transition);
+        }
+
+        .admin-mode .change-cover-btn {
+            display: block;
+        }
+
+        .change-cover-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background-color: white;
+            color: var(--text-color);
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 40px;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Secciones comunes */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* Noticias Section */
+        .noticias {
+            background-color: white;
+        }
+
+        .noticias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .noticia-card {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .noticia-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .noticia-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .noticia-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .noticia-card:hover .noticia-image img {
+            transform: scale(1.05);
+        }
+
+        .noticia-content {
+            padding: 20px;
+        }
+
+        .noticia-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .noticia-fecha {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Eventos Section */
+        .eventos {
+            background-color: var(--bg-light);
+        }
+
+        .eventos-calendario {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .evento-card {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .evento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .evento-fecha {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .evento-fecha .dia {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .evento-fecha .mes {
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .evento-info {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .evento-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .evento-hora {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Servicios Section */
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .servicio-card {
+            background-color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .servicio-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .servicio-card:hover .servicio-icon {
+            background-color: var(--primary-color);
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .servicio-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .ver-mas-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ver-mas-btn:hover {
+            background-color: #0d4b6e;
+        }
+
+        .servicio-detalles {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .servicio-detalles.active {
+            max-height: 1000px;
+        }
+
+        .servicio-imagenes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .servicio-imagen {
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .servicio-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .servicio-imagen img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Contacto Section */
+        .contacto-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contacto-info, .contacto-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contacto-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .info-item i {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .redes-sociales {
+            display: flex;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .red-social {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .red-social:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .footer-logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .footer-links h3, .footer-social h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after, .footer-social h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Botón volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        /* Modal de edición */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--danger-color);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .image-upload {
+            margin-top: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        /* Admin mode */
+        .admin-mode .editable {
+            position: relative;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .admin-mode .editable:hover {
+            background-color: rgba(79, 195, 247, 0.1);
+            outline: 1px dashed var(--accent-color);
+        }
+
+        .admin-mode .editable::after {
+            content: '\f044';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .admin-mode .editable:hover::after {
+            opacity: 1;
+        }
+
+        .admin-mode .editable-image {
+            position: relative;
+        }
+
+        .admin-mode .editable-image::after {
+            content: '\f030';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .admin-mode .editable-image:hover::after {
+            opacity: 1;
+        }
+
+        .admin-mode .editable-image:hover {
+            outline: 2px dashed var(--accent-color);
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-light);
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .login-box .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .login-box label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-box .btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .login-error {
+            color: var(--danger-color);
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Carreras Section */
+        .carreras {
+            background-color: white;
+        }
+
+        .carreras-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background-color: var(--bg-light);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .carreras-content {
+            display: none;
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .carreras-content.active {
+            display: block;
+        }
+
+        .carreras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .carrera-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Galería Section */
+        .galeria {
+            background-color: var(--bg-light);
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .galeria-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .galeria-item img, .galeria-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .galeria-item:hover img, .galeria-item:hover video {
+            transform: scale(1.05);
+        }
+
+        .galeria-item .tipo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .add-media-btn {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .upload-video-btn {
+            display: none;
+            position: absolute;
+            bottom: 50px;
+            right: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .delete-media-btn {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .admin-mode .add-media-btn,
+        .admin-mode .upload-video-btn,
+        .admin-mode .delete-media-btn {
+            display: block;
+        }
+
+        /* Cogobierno Section */
+        .cogobierno-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .cogobierno-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .cogobierno-card {
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .cogobierno-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sección IVU */
+        .ivu-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+
+        .ivu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ivu-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .ivu-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .ivu-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .ivu-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .ivu-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Sección Bedelías */
+        .bedelias-section {
+            background-color: var(--bg-light);
+            padding: 80px 0;
+        }
+
+        .bedelias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .bedelias-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Sección CECUP */
+        .cecup-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+
+        .cecup-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .cecup-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .cecup-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .cecup-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cecup-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Hero Section Final */
+        .final-hero {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .final-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .final-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        /* Modal para cambiar imagen de portada */
+        .cover-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .cover-modal h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        /* Sección de Elecciones */
+        .elecciones-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+
+        .elecciones-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .elecciones-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .elecciones-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .elecciones-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .elecciones-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .elecciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .elecciones-card {
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .elecciones-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .elecciones-card .servicio-icon {
+            margin-bottom: 20px;
+        }
+
+        .elecciones-timeline {
+            margin-top: 40px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .elecciones-timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 4px solid var(--accent-color);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Portada de Elecciones */
+        .elecciones-cover {
+            height: 70vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1551524559-8af4e6624178?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1926&q=80') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .elecciones-cover .cover-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.5s forwards;
+        }
+
+        .elecciones-cover h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+
+        .elecciones-cover p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .elecciones-cover .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .elecciones-cover .change-cover-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+            transition: var(--transition);
+        }
+
+        .admin-mode .elecciones-cover .change-cover-btn {
+            display: block;
+        }
+
+        /* Estilos para iconos editables */
+        .admin-mode .servicio-icon.editable-icon {
+            position: relative;
+        }
+
+        .admin-mode .servicio-icon.editable-icon::after {
+            content: '\f030';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .admin-mode .servicio-icon.editable-icon:hover::after {
+            opacity: 1;
+        }
+
+        .admin-mode .servicio-icon.editable-icon:hover {
+            outline: 2px dashed var(--accent-color);
+        }
+
+        /* Modal de imagen ampliada */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img, .lightbox-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        .lightbox-prev, .lightbox-next {
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Sección Motivos de Sanción */
+        .sanciones-section {
+            background-color: var(--bg-light);
+            padding: 80px 0;
+        }
+
+        .sanciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .sancion-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .sancion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .sancion-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .full-cover h1, .elecciones-cover h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero h2, .final-hero h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 0;
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links a {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .full-cover h1, .elecciones-cover h1 {
+                font-size: 2.4rem;
+            }
+            
+            .full-cover p, .elecciones-cover p {
+                font-size: 1.1rem;
+            }
+            
+            .hero, .final-hero {
+                padding: 60px 0;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .contacto-content {
+                flex-direction: column;
+            }
+            
+            .ivu-content, .cecup-content, .elecciones-content {
+                flex-direction: column;
+            }
+            
+            .ivu-image, .cecup-image, .elecciones-image {
+                order: -1;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-buttons .btn {
+                margin: 5px 0;
+            }
+
+            .servicio-imagenes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .full-cover h1, .elecciones-cover h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h2, .final-hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .carreras-tabs {
+                flex-direction: column;
+            }
+
+            .servicio-imagenes {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="https://via.placeholder.com/40x40/4a6fa5/ffffff?text=CECUP" alt="Centro de Estudiantes CECUP Logo">
+                <span>Centro de Estudiantes CECUP</span>
+            </a>
+            <div class="nav-links">
+                <a href="#inicio" class="active">Inicio</a>
+                <a href="#noticias">Noticias</a>
+                <a href="#eventos">Eventos</a>
+                <a href="#carreras">Carreras</a>
+                <a href="#galeria">Galería</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#sanciones">Sanciones</a>
+                <a href="#elecciones">Elecciones</a>
+                <a href="#ivu">IVU</a>
+                <a href="#bedelias">Bedelías</a>
+                <a href="#cecup">CECUP</a>
+                <a href="#contacto">Contacto</a>
+                <a href="#login" class="admin-login" id="adminLoginBtn"><i class="fas fa-lock"></i> Iniciar Sesión</a>
+                <a href="#" class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </div>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portada Completa Mejorada -->
+    <section class="full-cover" id="inicio">
+        <div class="particles" id="particles"></div>
+        <div class="cover-content">
+            <h1 class="editable" data-id="portada-title">Centro de Estudiantes CECUP</h1>
+            <p class="editable" data-id="portada-text">Representando y apoyando a los estudiantes del Cenur Litoral Norte Sede Paysandú</p>
+            <div class="hero-buttons">
+                <a href="#noticias" class="btn">Ver Novedades</a>
+                <a href="#contacto" class="btn btn-secondary">Contacto</a>
+            </div>
+        </div>
+        <button class="change-cover-btn" id="changeCoverBtn"><i class="fas fa-camera"></i> Cambiar Imagen</button>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="editable" data-id="hero-title">Bienvenidos al Centro de Estudiantes CECUP</h2>
+                <p class="editable" data-id="hero-text">Somos el órgano representativo de los estudiantes ante las autoridades universitarias y la sociedad. Trabajamos para mejorar tu experiencia universitaria.</p>
+                <a href="#cecup" class="btn">Conócenos</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/500x400/4a6fa5/ffffff?text=Centro+de+Estudiantes" alt="Estudiantes reunidos" class="editable-image" data-id="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Noticias Section -->
+    <section id="noticias" class="noticias">
+        <div class="container">
+            <h2 class="section-title editable" data-id="noticias-title">Últimas Noticias</h2>
+            <div class="noticias-grid">
+                <div class="noticia-card">
+                    <div class="noticia-image">
+                        <img src="https://via.placeholder.com/300x200/6c8ebf/ffffff?text=Noticia+1" class="editable-image" data-id="noticia1-image">
+                    </div>
+                    <div class="noticia-content">
+                        <h3 class="editable" data-id="noticia1-title">Reunión con autoridades</h3>
+                        <p class="editable" data-id="noticia1-text">El próximo lunes tendremos una reunión con el rectorado para discutir los cambios en el reglamento estudiantil.</p>
+                        <span class="noticia-fecha editable" data-id="noticia1-fecha">15 de Julio, 2023</span>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <div class="noticia-image">
+                        <img src="https://via.placeholder.com/300x200/6c8ebf/ffffff?text=Noticia+2" class="editable-image" data-id="noticia2-image">
+                    </div>
+                    <div class="noticia-content">
+                        <h3 class="editable" data-id="noticia2-title">Nuevos talleres disponibles</h3>
+                        <p class="editable" data-id="noticia2-text">Inscripciones abiertas para los talleres de fotografía, programación y debate. Cupos limitados.</p>
+                        <span class="noticia-fecha editable" data-id="noticia2-fecha">10 de Julio, 2023</span>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <div class="noticia-image">
+                        <img src="https://via.placeholder.com/300x200/6c8ebf/ffffff?text=Noticia+3" class="editable-image" data-id="noticia3-image">
+                    </div>
+                    <div class="noticia-content">
+                        <h3 class="editable" data-id="noticia3-title">Resultados de las elecciones</h3>
+                        <p class="editable" data-id="noticia3-text">Conoce a los nuevos representantes del centro de estudiantes para el período 2023-2024.</p>
+                        <span class="noticia-fecha editable" data-id="noticia3-fecha">5 de Julio, 2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eventos Section -->
+    <section id="eventos" class="eventos">
+        <div class="container">
+            <h2 class="section-title editable" data-id="eventos-title">Próximos Eventos</h2>
+            <div class="eventos-calendario">
+                <div class="evento-card">
+                    <div class="evento-fecha">
+                        <span class="dia editable" data-id="evento1-dia">25</span>
+                        <span class="mes editable" data-id="evento1-mes">Jul</span>
+                    </div>
+                    <div class="evento-info">
+                        <h3 class="editable" data-id="evento1-titulo">Feria de Empleo</h3>
+                        <p class="editable" data-id="evento1-desc">Empresas locales vendrán a ofrecer oportunidades laborales para estudiantes.</p>
+                        <span class="evento-hora editable" data-id="evento1-hora">10:00 - 16:00 | Patio Central</span>
+                    </div>
+                </div>
+                <div class="evento-card">
+                    <div class="evento-fecha">
+                        <span class="dia editable" data-id="evento2-dia">30</span>
+                        <span class="mes editable" data-id="evento2-mes">Jul</span>
+                    </div>
+                    <div class="evento-info">
+                        <h3 class="editable" data-id="evento2-titulo">Charla: Educación Financiera</h3>
+                        <p class="editable" data-id="evento2-desc">Aprende a manejar tus finanzas personales con expertos en el tema.</p>
+                        <span class="evento-hora editable" data-id="evento2-hora">15:00 - 17:00 | Aula Magna</span>
+                    </div>
+                </div>
+                <div class="evento-card">
+                    <div class="evento-fecha">
+                        <span class="dia editable" data-id="evento3-dia">5</span>
+                        <span class="mes editable" data-id="evento3-mes">Ago</span>
+                    </div>
+                    <div class="evento-info">
+                        <h3 class="editable" data-id="evento3-titulo">Torneo de Deportes</h3>
+                        <p class="editable" data-id="evento3-desc">Inscríbete en fútbol, básquet o voleibol. ¡Premios para los ganadores!</p>
+                        <span class="evento-hora editable" data-id="evento3-hora">09:00 - 18:00 | Canchas Deportivas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carreras Section -->
+    <section id="carreras" class="carreras">
+        <div class="container">
+            <h2 class="section-title editable" data-id="carreras-title">Oferta Académica</h2>
+            
+            <div class="carreras-tabs">
+                <button class="tab-btn active" data-tab="grado-tecnologias">Tecnologías</button>
+                <button class="tab-btn" data-tab="grado-salud">Salud</button>
+                <button class="tab-btn" data-tab="grado-social">Social</button>
+                <button class="tab-btn" data-tab="tecnicaturas">Tecnicaturas</button>
+                <button class="tab-btn" data-tab="otros">Otras Opciones</button>
+            </div>
+            
+            <div class="carreras-content active" id="grado-tecnologias">
+                <h3 class="editable" data-id="grado-tecnologias-title">Área de Tecnologías y Ciencias de la Naturaleza y el Hábitat</h3>
+                <div class="carreras-grid">
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera1">Ingeniero Agrónomo</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera2">Licenciatura en Ingeniería Biológica</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carreras-content" id="grado-salud">
+                <h3 class="editable" data-id="grado-salud-title">Área Ciencias de la Salud</h3>
+                <div class="carreras-grid">
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera3">Doctor en Medicina</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera4">Licenciatura en Biología Humana</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera5">Licenciatura en Educación Física</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera6">Licenciatura en Enfermería</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera7">Licenciatura en Fisioterapia</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera8">Licenciatura en Imagenología</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera9">Licenciatura en Laboratorio Clínico</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera10">Licenciatura en Nutrición</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera11">Licenciatura en Psicomotricidad</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera12">Ciclo Inicial Optativo Área Salud</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carreras-content" id="grado-social">
+                <h3 class="editable" data-id="grado-social-title">Área Social y Artística</h3>
+                <div class="carreras-grid">
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera13">Licenciatura en Trabajo Social</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera14">Licenciatura en Ciencias Sociales</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="carrera15">Licenciatura en Turismo</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carreras-content" id="tecnicaturas">
+                <div class="carreras-grid">
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura1">Tecnólogo Químico</h4>
+                        <p class="editable" data-id="tec-area1">Área Tecnologías y Ciencias de la Naturaleza y el Hábitat</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura2">Tecnólogo Industrial Mecánico</h4>
+                        <p class="editable" data-id="tec-area2">Área Tecnologías y Ciencias de la Naturaleza y el Hábitat</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura3">Tecnólogo en Informática</h4>
+                        <p class="editable" data-id="tec-area3">Área Tecnologías y Ciencias de la Naturaleza y el Hábitat</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura4">Tecnólogo en Control Ambiental</h4>
+                        <p class="editable" data-id="tec-area4">Área Tecnologías y Ciencias de la Naturaleza y el Hábitat</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura5">Curso de Guardavidas</h4>
+                        <p class="editable" data-id="tec-area5">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura6">Tecnicatura en Anatomía Patológica</h4>
+                        <p class="editable" data-id="tec-area6">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura7">Tecnicatura en Deportes</h4>
+                        <p class="editable" data-id="tec-area7">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura8">Tecnicatura en Hemoterapia</h4>
+                        <p class="editable" data-id="tec-area8">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura9">Tecnicatura en Salud Ocupacional</h4>
+                        <p class="editable" data-id="tec-area9">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura10">Tecnicatura en Podología</h4>
+                        <p class="editable" data-id="tec-area10">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura11">Tecnicatura en Instrumentación Quirúrgica</h4>
+                        <p class="editable" data-id="tec-area11">Área Ciencias de la Salud</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura12">Tecnicatura en Bienes Culturales</h4>
+                        <p class="editable" data-id="tec-area12">Área Social y Artística</p>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="tecnicatura13">Tecnicatura en Tecnologías de la Imagen Fotográfica</h4>
+                        <p class="editable" data-id="tec-area13">Área Social y Artística</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carreras-content" id="otros">
+                <h3 class="editable" data-id="otros-title">Otras Opciones</h3>
+                <div class="carreras-grid">
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion1">Ciclos iniciales de Biología y Bioquímica</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion2">Ciclos iniciales de Ciencias Sociales</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion3">Ciclos iniciales de Matemáticas</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion4">Ciclos iniciales optativos en Salud</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion5">Ciclos iniciales optativos en área científico tecnológica</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion6">Ciclos iniciales optativos en área social</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion7">Licenciatura en Análisis Alimentario</h4>
+                    </div>
+                    <div class="carrera-item">
+                        <h4 class="editable" data-id="opcion8">Carreras de Tecnología Médica</h4>
+                        <p class="editable" data-id="opcion8-desc">(sin restricción de cupos ni prueba de ingreso para el ingreso en Paysandú)</p>
+                    </div>
+                </div>
+                <p class="editable" data-id="otros-text" style="margin-top: 20px;">
+                    Para más información sobre inscripciones y detalles de cada carrera, se puede consultar el sitio web del 
+                    <a href="#" class="editable" data-id="cenur-link">Cenur Litoral Norte</a> o el de la 
+                    <a href="#" class="editable" data-id="udelar-link">Universidad de la República</a>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Section -->
+    <section id="galeria" class="galeria">
+        <div class="container">
+            <h2 class="section-title editable" data-id="galeria-title">Galería Multimedia</h2>
+            <div class="galeria-grid">
+                <div class="galeria-item">
+                    <img src="https://via.placeholder.com/300x300/6c8ebf/ffffff?text=Foto+1" class="editable-image" data-id="galeria1">
+                    <span class="tipo">Foto</span>
+                    <button class="add-media-btn"><i class="fas fa-plus"></i></button>
+                    <button class="upload-video-btn"><i class="fas fa-video"></i></button>
+                    <button class="delete-media-btn"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="galeria-item">
+                    <img src="https://via.placeholder.com/300x300/6c8ebf/ffffff?text=Foto+2" class="editable-image" data-id="galeria2">
+                    <span class="tipo">Foto</span>
+                    <button class="add-media-btn"><i class="fas fa-plus"></i></button>
+                    <button class="upload-video-btn"><i class="fas fa-video"></i></button>
+                    <button class="delete-media-btn"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="galeria-item">
+                    <video controls>
+                        <source src="#" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                    <span class="tipo">Video</span>
+                    <button class="add-media-btn"><i class="fas fa-plus"></i></button>
+                    <button class="upload-video-btn"><i class="fas fa-video"></i></button>
+                    <button class="delete-media-btn"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="galeria-item">
+                    <img src="https://via.placeholder.com/300x300/6c8ebf/ffffff?text=Foto+3" class="editable-image" data-id="galeria3">
+                    <span class="tipo">Foto</span>
+                    <button class="add-media-btn"><i class="fas fa-plus"></i></button>
+                    <button class="upload-video-btn"><i class="fas fa-video"></i></button>
+                    <button class="delete-media-btn"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="galeria-item">
+                    <img src="https://via.placeholder.com/300x300/6c8ebf/ffffff?text=Foto+4" class="editable-image" data-id="galeria4">
+                    <span class="tipo">Foto</span>
+                    <button class="add-media-btn"><i class="fas fa-plus"></i></button>
+                    <button class="upload-video-btn"><i class="fas fa-video"></i></button>
+                    <button class="delete-media-btn"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="galeria-item">
+                    <img src="https://via.placeholder.com/300x300/6c8ebf/ffffff?text=Foto+5" class="editable-image" data-id="galeria5">
+                    <span class="tipo">Foto</span>
+                    <button class="add-media-btn"><i class="fas fa-plus"></i></button>
+                    <button class="upload-video-btn"><i class="fas fa-video"></i></button>
+                    <button class="delete-media-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios Section -->
+    <section id="servicios" class="servicios">
+        <div class="container">
+            <h2 class="section-title editable" data-id="servicios-title">Nuestros Servicios</h2>
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon editable-icon" data-id="servicio1-icon" style="background-image: url('https://via.placeholder.com/70x70/4a6fa5/ffffff?text=Libro')">
+                        <i class="fas fa-book" style="display: none;"></i>
+                    </div>
+                    <h3 class="editable" data-id="servicio1-titulo">Biblioteca</h3>
+                    <p class="editable" data-id="servicio1-desc">Acceso a libros, apuntes y material de estudio compartido por estudiantes.</p>
+                    <button class="ver-mas-btn">Ver más</button>
+                    <div class="servicio-detalles">
+                        <p class="editable" data-id="servicio1-detalle">La biblioteca cuenta con más de 500 títulos disponibles para préstamo. Horario de atención: Lunes a Viernes de 8:00 a 20:00.</p>
+                        <div class="servicio-imagenes">
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Biblioteca+1" class="editable-image" data-id="servicio1-img1">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Biblioteca+2" class="editable-image" data-id="servicio1-img2">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Biblioteca+3" class="editable-image" data-id="servicio1-img3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon editable-icon" data-id="servicio2-icon" style="background-image: url('https://via.placeholder.com/70x70/4a6fa5/ffffff?text=Camiseta')">
+                        <i class="fas fa-tshirt" style="display: none;"></i>
+                    </div>
+                    <h3 class="editable" data-id="servicio2-titulo">Venta de Indumentaria</h3>
+                    <p class="editable" data-id="servicio2-desc">Compra buzos, remeras y accesorios con el logo de la institución.</p>
+                    <button class="ver-mas-btn">Ver más</button>
+                    <div class="servicio-detalles">
+                        <p class="editable" data-id="servicio2-detalle">Contamos con una variedad de productos con el logo institucional. Precios especiales para socios del centro de estudiantes.</p>
+                        <div class="servicio-imagenes">
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Indumentaria+1" class="editable-image" data-id="servicio2-img1">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Indumentaria+2" class="editable-image" data-id="servicio2-img2">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Indumentaria+3" class="editable-image" data-id="servicio2-img3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon editable-icon" data-id="servicio3-icon" style="background-image: url('https://via.placeholder.com/70x70/4a6fa5/ffffff?text=Asesor')">
+                        <i class="fas fa-handshake" style="display: none;"></i>
+                    </div>
+                    <h3 class="editable" data-id="servicio3-titulo">Asesoramiento</h3>
+                    <p class="editable" data-id="servicio3-desc">Orientación sobre trámites, becas y derechos estudiantiles.</p>
+                    <button class="ver-mas-btn">Ver más</button>
+                    <div class="servicio-detalles">
+                        <p class="editable" data-id="servicio3-detalle">Ofrecemos asesoramiento personalizado sobre becas, trámites universitarios y derechos estudiantiles. Horario de atención: Martes y Jueves de 14:00 a 18:00.</p>
+                        <div class="servicio-imagenes">
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Asesoramiento+1" class="editable-image" data-id="servicio3-img1">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Asesoramiento+2" class="editable-image" data-id="servicio3-img2">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Asesoramiento+3" class="editable-image" data-id="servicio3-img3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon editable-icon" data-id="servicio4-icon" style="background-image: url('https://via.placeholder.com/70x70/4a6fa5/ffffff?text=Café')">
+                        <i class="fas fa-coffee" style="display: none;"></i>
+                    </div>
+                    <h3 class="editable" data-id="servicio4-titulo">Cafetería</h3>
+                    <p class="editable" data-id="servicio4-desc">Descuentos especiales para socios del centro de estudiantes.</p>
+                    <button class="ver-mas-btn">Ver más</button>
+                    <div class="servicio-detalles">
+                        <p class="editable" data-id="servicio4-detalle">La cafetería ofrece descuentos del 20% para socios del centro de estudiantes. Menú variado con opciones saludables.</p>
+                        <div class="servicio-imagenes">
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Cafetería+1" class="editable-image" data-id="servicio4-img1">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Cafetería+2" class="editable-image" data-id="servicio4-img2">
+                            </div>
+                            <div class="servicio-imagen">
+                                <img src="https://via.placeholder.com/150/6c8ebf/ffffff?text=Cafetería+3" class="editable-image" data-id="servicio4-img3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cogobierno Section -->
+            <div class="cogobierno-info" style="margin-top: 60px;">
+                <h2 class="section-title editable" data-id="cogobierno-title">Cogobierno Universitario</h2>
+                <p class="editable" data-id="cogobierno-text">
+                    El cogobierno es un principio fundamental de la Universidad de la República que establece la participación de todos los estamentos universitarios (estudiantes, docentes y egresados) en la toma de decisiones. En el Centro de Estudiantes CECUP, promovemos la participación activa de los estudiantes en los órganos de cogobierno.
+                </p>
+                
+                <div class="cogobierno-grid">
+                    <div class="cogobierno-card">
+                        <div class="servicio-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="editable" data-id="cogobierno1">Asamblea General</h3>
+                        <p class="editable" data-id="cogobierno1-desc">Máximo órgano de gobierno de la Universidad</p>
+                    </div>
+                    <div class="cogobierno-card">
+                        <div class="servicio-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3 class="editable" data-id="cogobierno2">Consejos de Facultad</h3>
+                        <p class="editable" data-id="cogobierno2-desc">Órganos de gobierno a nivel de cada servicio universitario</p>
+                    </div>
+                    <div class="cogobierno-card">
+                        <div class="servicio-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="editable" data-id="cogobierno3">Representación Estudiantil</h3>
+                        <p class="editable" data-id="cogobierno3-desc">Los estudiantes eligen a sus representantes para participar en el cogobierno</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Motivos de Sanción -->
+    <section id="sanciones" class="sanciones-section">
+        <div class="container">
+            <h2 class="section-title editable" data-id="sanciones-title">Motivos de Sanción</h2>
+            <div class="sanciones-grid">
+                <div class="sancion-card">
+                    <h3 class="editable" data-id="sancion1-title">Falta de asistencia</h3>
+                    <p class="editable" data-id="sancion1-text">Ausencias injustificadas a clases o actividades obligatorias pueden resultar en sanciones académicas.</p>
+                </div>
+                <div class="sancion-card">
+                    <h3 class="editable" data-id="sancion2-title">Conducta inapropiada</h3>
+                    <p class="editable" data-id="sancion2-text">Comportamiento disruptivo o irrespetuoso dentro de las instalaciones universitarias.</p>
+                </div>
+                <div class="sancion-card">
+                    <h3 class="editable" data-id="sancion3-title">Plagio académico</h3>
+                    <p class="editable" data-id="sancion3-text">Uso no autorizado de material protegido sin la debida atribución en trabajos académicos.</p>
+                </div>
+                <div class="sancion-card">
+                    <h3 class="editable" data-id="sancion4-title">Fraude en evaluaciones</h3>
+                    <p class="editable" data-id="sancion4-text">Copia o intento de copia durante exámenes o evaluaciones académicas.</p>
+                </div>
+                <div class="sancion-card">
+                    <h3 class="editable" data-id="sancion5-title">Daño a propiedad universitaria</h3>
+                    <p class="editable" data-id="sancion5-text">Destrucción o daño intencional a instalaciones, equipos o materiales de la universidad.</p>
+                </div>
+                <div class="sancion-card">
+                    <h3 class="editable" data-id="sancion6-title">Incumplimiento de normas</h3>
+                    <p class="editable" data-id="sancion6-text">Violación de las normas y reglamentos establecidos por la institución.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Elecciones Universitarias -->
+    <section id="elecciones" class="elecciones-section">
+        <div class="container">
+            <h2 class="section-title editable" data-id="elecciones-title">Elecciones Universitarias</h2>
+            
+            <!-- Portada de Elecciones -->
+            <div class="elecciones-cover">
+                <div class="particles" id="elecciones-particles"></div>
+                <div class="cover-content">
+                    <h1 class="editable" data-id="elecciones-portada-title">Participa en las Elecciones Universitarias</h1>
+                    <p class="editable" data-id="elecciones-portada-text">Tu voto es fundamental para la representación estudiantil en los órganos de cogobierno</p>
+                    <div class="hero-buttons">
+                        <a href="#elecciones-info" class="btn">Conoce más</a>
+                        <a href="#elecciones-calendario" class="btn btn-secondary">Calendario Electoral</a>
+                    </div>
+                </div>
+                <button class="change-cover-btn" id="changeEleccionesCoverBtn"><i class="fas fa-camera"></i> Cambiar Imagen</button>
+            </div>
+            
+            <div class="elecciones-content" id="elecciones-info">
+                <div class="elecciones-info">
+                    <h3 class="editable" data-id="elecciones-subtitle">Sobre las Elecciones Universitarias</h3>
+                    <p class="editable" data-id="elecciones-text1">
+                        Las elecciones universitarias son el mecanismo mediante el cual los estudiantes eligen a sus representantes ante los órganos de cogobierno de la Universidad de la República.
+                    </p>
+                    <p class="editable" data-id="elecciones-text2">
+                        Los estudiantes pueden votar y ser votados para representar a sus compañeros en diferentes espacios de decisión, como el Consejo de Facultad, la Asamblea General del Claustro y el Consejo Directivo Central.
+                    </p>
+                    <p class="editable" data-id="elecciones-text3">
+                        La participación en las elecciones es un derecho y una responsabilidad de todos los estudiantes, ya que a través de este mecanismo se definen las políticas y decisiones que afectan directamente la vida universitaria.
+                    </p>
+                </div>
+                <div class="elecciones-image">
+                    <img src="https://via.placeholder.com/500x350/6c8ebf/ffffff?text=Elecciones+Universitarias" alt="Elecciones Universitarias" class="editable-image" data-id="elecciones-image">
+                </div>
+            </div>
+            
+            <div class="elecciones-grid">
+                <div class="elecciones-card">
+                    <div class="servicio-icon">
+                        <i class="fas fa-vote-yea"></i>
+                    </div>
+                    <h3 class="editable" data-id="elecciones-card1-title">¿Quiénes pueden votar?</h3>
+                    <p class="editable" data-id="elecciones-card1-text">Todos los estudiantes regulares de la Universidad de la República pueden ejercer su derecho al voto.</p>
+                </div>
+                <div class="elecciones-card">
+                    <div class="servicio-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="editable" data-id="elecciones-card2-title">¿Quiénes pueden ser candidatos?</h3>
+                    <p class="editable" data-id="elecciones-card2-text">Estudiantes regulares que cumplan con los requisitos establecidos en el reglamento electoral.</p>
+                </div>
+                <div class="elecciones-card">
+                    <div class="servicio-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="editable" data-id="elecciones-card3-title">¿Cuándo son las elecciones?</h3>
+                    <p class="editable" data-id="elecciones-card3-text">Se realizan anualmente, generalmente en el segundo semestre del año.</p>
+                </div>
+            </div>
+            
+            <div class="elecciones-timeline" id="elecciones-calendario">
+                <h3 class="section-title editable" data-id="elecciones-calendario-title">Calendario Electoral 2025</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date editable" data-id="elecciones-fecha1">15 de Agosto</div>
+                    <div class="timeline-content">
+                        <h4 class="editable" data-id="elecciones-evento1">Apertura de inscripción de listas</h4>
+                        <p class="editable" data-id="elecciones-evento1-desc">Período para que los estudiantes conformen sus listas y presenten la documentación requerida.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date editable" data-id="elecciones-fecha2">30 de Agosto</div>
+                    <div class="timeline-content">
+                        <h4 class="editable" data-id="elecciones-evento2">Cierre de inscripciones</h4>
+                        <p class="editable" data-id="elecciones-evento2-desc">Fecha límite para presentar las listas de candidatos.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date editable" data-id="elecciones-fecha3">10-14 de Septiembre</div>
+                    <div class="timeline-content">
+                        <h4 class="editable" data-id="elecciones-evento3">Campaña electoral</h4>
+                        <p class="editable" data-id="elecciones-evento3-desc">Período para que las listas presenten sus propuestas a la comunidad estudiantil.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date editable" data-id="elecciones-fecha4">17 de Septiembre</div>
+                    <div class="timeline-content">
+                        <h4 class="editable" data-id="elecciones-evento4">Día de elecciones</h4>
+                        <p class="editable" data-id="elecciones-evento4-desc">Jornada electoral para elegir a los representantes estudiantiles.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date editable" data-id="elecciones-fecha5">20 de Septiembre</div>
+                    <div class="timeline-content">
+                        <h4 class="editable" data-id="elecciones-evento5">Publicación de resultados</h4>
+                        <p class="editable" data-id="elecciones-evento5-desc">Divulgación de los resultados oficiales de las elecciones.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cogobierno-info" style="margin-top: 60px;">
+                <h3 class="section-title editable" data-id="elecciones-importancia-title">¿Por qué es importante votar?</h3>
+                <p class="editable" data-id="elecciones-importancia-text">
+                    La participación en las elecciones universitarias es fundamental para garantizar una representación estudiantil legítima y fortalecer el cogobierno. Tus representantes tendrán voz y voto en decisiones importantes como:
+                </p>
+                <ul class="editable" data-id="elecciones-importancia-list">
+                    <li>Planificación de carreras y planes de estudio</li>
+                    <li>Asignación de recursos y presupuesto</li>
+                    <li>Políticas de bienestar estudiantil</li>
+                    <li>Relaciones con otras instituciones</li>
+                    <li>Defensa de los derechos estudiantiles</li>
+                </ul>
+                <p class="editable" data-id="elecciones-importancia-text2" style="margin-top: 20px;">
+                    Tu voto es tu voz en la universidad. Participar en las elecciones es ejercer tu derecho a decidir quiénes te representarán en estos espacios de decisión.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección IVU -->
+    <section id="ivu" class="ivu-section">
+        <div class="container">
+            <h2 class="section-title editable" data-id="ivu-title">Instituto de Vida Universitaria (IVU)</h2>
+            <div class="ivu-content">
+                <div class="ivu-info">
+                    <p class="editable" data-id="ivu-text1">El Instituto de Vida Universitaria (IVU) es un espacio dedicado al desarrollo integral de los estudiantes, ofreciendo actividades culturales, deportivas y de bienestar.</p>
+                    <p class="editable" data-id="ivu-text2">Entre los servicios que ofrece el IVU se encuentran:</p>
+                    <ul class="editable" data-id="ivu-list">
+                        <li>Actividades deportivas y recreativas</li>
+                        <li>Talleres culturales y artísticos</li>
+                        <li>Apoyo psicológico y orientación estudiantil</li>
+                        <li>Espacios de estudio y recreación</li>
+                        <li>Programas de voluntariado y extensión universitaria</li>
+                    </ul>
+                    <p class="editable" data-id="ivu-text3">El IVU está ubicado en el Campus Universitario y abre sus puertas de lunes a viernes de 8:00 a 20:00 horas.</p>
+                </div>
+                <div class="ivu-image">
+                    <img src="https://via.placeholder.com/500x350/6c8ebf/ffffff?text=IVU" alt="Instituto de Vida Universitaria" class="editable-image" data-id="ivu-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Bedelías -->
+    <section id="bedelias" class="bedelias-section">
+        <div class="container">
+            <h2 class="section-title editable" data-id="bedelias-title">Bedelías</h2>
+            <div class="bedelias-grid">
+                <div class="bedelias-card">
+                    <h3 class="editable" data-id="bedelias1-title">Bedelía Central</h3>
+                    <p class="editable" data-id="bedelias1-text">La Bedelía Central es el área encargada de los trámites académicos generales, inscripciones a cursos y exámenes, y certificados estudiantiles.</p>
+                    <p class="editable" data-id="bedelias1-horario"><strong>Horario de atención:</strong> Lunes a viernes de 9:00 a 16:00</p>
+                    <p class="editable" data-id="bedelias1-contacto"><strong>Contacto:</strong> bedelia@cenur.edu.uy | Tel: 4722 1234 int. 101</p>
+                </div>
+                <div class="bedelias-card">
+                    <h3 class="editable" data-id="bedelias2-title">Bedelía de Salud</h3>
+                    <p class="editable" data-id="bedelias2-text">Especializada en las carreras del área de la salud, gestiona los trámites específicos de estas disciplinas.</p>
+                    <p class="editable" data-id="bedelias2-horario"><strong>Horario de atención:</strong> Lunes a viernes de 10:00 a 15:00</p>
+                    <p class="editable" data-id="bedelias2-contacto"><strong>Contacto:</strong> bedeliasalud@cenur.edu.uy | Tel: 4722 1234 int. 102</p>
+                </div>
+                <div class="bedelias-card">
+                    <h3 class="editable" data-id="bedelias3-title">Bedelía de Tecnologías</h3>
+                    <p class="editable" data-id="bedelias3-text">Encargada de las carreras tecnológicas y de ingeniería, gestiona los trámites específicos de estas disciplinas.</p>
+                    <p class="editable" data-id="bedelias3-horario"><strong>Horario de atención:</strong> Lunes a viernes de 9:00 a 17:00</p>
+                    <p class="editable" data-id="bedelias3-contacto"><strong>Contacto:</strong> bedeliatecno@cenur.edu.uy | Tel: 4722 1234 int. 103</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección CECUP -->
+    <section id="cecup" class="cecup-section">
+        <div class="container">
+            <h2 class="section-title editable" data-id="cecup-title">Sobre el Centro de Estudiantes CECUP</h2>
+            <div class="cecup-content">
+                <div class="cecup-info">
+                    <p class="editable" data-id="cecup-text1">El Centro de Estudiantes del Cenur Litoral Norte Sede Paysandú (CECUP) es el órgano representativo de los estudiantes ante las autoridades universitarias y la sociedad.</p>
+                    <p class="editable" data-id="cecup-text2">Nuestros objetivos principales son:</p>
+                    <ul class="editable" data-id="cecup-list">
+                        <li>Defender los derechos e intereses de los estudiantes</li>
+                        <li>Promover la participación estudiantil en el cogobierno</li>
+                        <li>Organizar actividades académicas, culturales y recreativas</li>
+                        <li>Facilitar la integración de los estudiantes a la vida universitaria</li>
+                        <li>Representar a los estudiantes ante las autoridades universitarias</li>
+                    </ul>
+                    <p class="editable" data-id="cecup-text3">El Centro de Estudiantes CECUP está conformado por estudiantes voluntarios de diversas carreras que trabajan para mejorar la experiencia universitaria de todos.</p>
+                </div>
+                <div class="cecup-image">
+                    <img src="https://via.placeholder.com/500x350/6c8ebf/ffffff?text=Centro+de+Estudiantes" alt="Centro de Estudiantes" class="editable-image" data-id="cecup-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="contacto">
+        <div class="container">
+            <h2 class="section-title editable" data-id="contacto-title">Contacto</h2>
+            <div class="contacto-content">
+                <div class="contacto-info">
+                    <h3 class="editable" data-id="contacto-subtitle">Estamos aquí para ayudarte</h3>
+                    <p class="editable" data-id="contacto-text">Si tienes alguna pregunta, sugerencia o necesitas asistencia, no dudes en contactarnos.</p>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="editable" data-id="contacto-direccion">Florida 1065, esquina Montevideo, Paysandú</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span class="editable" data-id="contacto-email">estudiantesccup@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span class="editable" data-id="contacto-telefono">+598 4722 1234</span>
+                    </div>
+                    <div class="redes-sociales">
+                        <a href="#" class="red-social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/estudiantes.cup/" class="red-social"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="red-social"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="red-social"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="contacto-form">
+                    <form id="formulario-contacto">
+                        <button type="submit" class="btn" style="width: 100%;">Contactar</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Proceso de Inscripción -->
+            <div class="cogobierno-info" style="margin-top: 60px;">
+                <h2 class="section-title editable" data-id="inscripcion-title">Proceso de Inscripción 2025</h2>
+                <div class="carrera-item">
+                    <h3 class="editable" data-id="inscripcion-subtitle">Fechas importantes</h3>
+                    <ul>
+                        <li class="editable" data-id="inscripcion1">Inscripciones: del 5 al 26 de febrero de 2025</li>
+                        <li class="editable" data-id="inscripcion2">Espacio de información: desde el 20 de enero de 2025</li>
+                        <li class="editable" data-id="inscripcion3">Inicio de clases: 3 de marzo de 2025</li>
+                    </ul>
+                </div>
+                <div class="carrera-item" style="margin-top: 20px;">
+                    <h3 class="editable" data-id="requisitos-title">Requisitos generales</h3>
+                    <p class="editable" data-id="requisitos-text">Los interesados deberán presentar documentación personal y académica según corresponda a cada carrera. Para más información, contactar con Bedelías.</p>
+                </div>
+                <div class="carrera-item" style="margin-top: 20px;">
+                    <h3 class="editable" data-id="formas-title">Formas de inscripción</h3>
+                    <p class="editable" data-id="formas-text">Las inscripciones se realizarán de forma online a través del portal de la Universidad o presencialmente en Bedelías.</p>
+                </div>
+            </div>
+            
+            <!-- Sección FEUU -->
+            <div class="cogobierno-info" style="margin-top: 30px;">
+                <h2 class="section-title editable" data-id="feuu-title">FEUU</h2>
+                <p class="editable" data-id="feuu-text">
+                    La Federación de Estudiantes Universitarios del Uruguay (FEUU) es la organización que agrupa a los centros de estudiantes de la Universidad de la República. El CECUP forma parte activa de la FEUU, participando en sus congresos y actividades.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section Final - Portada Completa -->
+    <section class="final-hero">
+        <div class="container">
+            <h2 class="editable" data-id="final-hero-title">Únete a nuestra comunidad estudiantil</h2>
+            <p class="editable" data-id="final-hero-text">Forma parte del Centro de Estudiantes CECUP y participa en las actividades que organizamos para mejorar tu experiencia universitaria.</p>
+            <div class="hero-buttons">
+                <a href="#contacto" class="btn">Contáctanos</a>
+                <a href="#servicios" class="btn btn-secondary">Conoce nuestros servicios</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/40x40/4a6fa5/ffffff?text=CECUP" alt="Centro de Estudiantes CECUP Logo">
+                    <span>Centro de Estudiantes CECUP</span>
+                </div>
+                <div class="footer-links">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#noticias">Noticias</a></li>
+                        <li><a href="#eventos">Eventos</a></li>
+                        <li><a href="#carreras">Carreras</a></li>
+                        <li><a href="#galeria">Galería</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#sanciones">Sanciones</a></li>
+                        <li><a href="#elecciones">Elecciones</a></li>
+                        <li><a href="#ivu">IVU</a></li>
+                        <li><a href="#bedelias">Bedelías</a></li>
+                        <li><a href="#cecup">CECUP</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/estudiantes.cup/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Centro de Estudiantes CECUP - Cenur Litoral Norte Sede Paysandú. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón de volver arriba -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Modal de edición (oculto inicialmente) -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Editar Contenido</h2>
+            <div class="form-group">
+                <label for="editContent">Contenido:</label>
+                <textarea id="editContent" rows="5"></textarea>
+            </div>
+            <div class="form-group image-upload" style="display:none;">
+                <label for="editImage">Cambiar imagen:</label>
+                <input type="file" id="editImage" accept="image/*,video/*">
+            </div>
+            <div class="modal-buttons">
+                <button id="saveChanges" class="btn">Guardar Cambios</button>
+                <button id="saveAndExit" class="btn btn-secondary">Guardar y Salir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login (oculto inicialmente) -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="login-box">
+                <h2>Acceso de Administrador</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Usuario:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn">Iniciar Sesión</button>
+                    <div id="loginError" class="login-error" style="display: none;">Usuario o contraseña incorrectos</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para subir videos -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subir Video</h2>
+            <div class="form-group">
+                <label for="videoFile">Seleccionar video:</label>
+                <input type="file" id="videoFile" accept="video/*">
+            </div>
+            <div class="form-group">
+                <label for="videoTitle">Título del video:</label>
+                <input type="text" id="videoTitle" placeholder="Ingrese el título del video">
+            </div>
+            <div class="modal-buttons">
+                <button id="uploadVideo" class="btn">Subir Video</button>
+                <button id="cancelVideo" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Confirmar Eliminación</h2>
+            <p>¿Estás seguro que deseas eliminar este elemento de la galería?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete" class="btn" style="background-color: var(--danger-color);">Eliminar</button>
+                <button id="cancelDelete" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar imagen de portada -->
+    <div id="coverModal" class="cover-modal">
+        <div class="cover-modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Cambiar Imagen de Portada</h2>
+            <div class="form-group">
+                <label for="coverImageUrl">URL de la nueva imagen:</label>
+                <input type="text" id="coverImageUrl" placeholder="Ingresa la URL de la imagen" class="form-control">
+            </div>
+            <p>O</p>
+            <div class="form-group">
+                <label for="coverImageUpload">Subir imagen desde tu dispositivo:</label>
+                <input type="file" id="coverImageUpload" accept="image/*" class="form-control">
+            </div>
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button id="saveCoverImage" class="btn">Guardar Cambios</button>
+                <button id="cancelCoverChange" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar imagen de portada de elecciones -->
+    <div id="eleccionesCoverModal" class="cover-modal">
+        <div class="cover-modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Cambiar Imagen de Portada de Elecciones</h2>
+            <div class="form-group">
+                <label for="eleccionesCoverImageUrl">URL de la nueva imagen:</label>
+                <input type="text" id="eleccionesCoverImageUrl" placeholder="Ingresa la URL de la imagen" class="form-control">
+            </div>
+            <p>O</p>
+            <div class="form-group">
+                <label for="eleccionesCoverImageUpload">Subir imagen desde tu dispositivo:</label>
+                <input type="file" id="eleccionesCoverImageUpload" accept="image/*" class="form-control">
+            </div>
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button id="saveEleccionesCoverImage" class="btn">Guardar Cambios</button>
+                <button id="cancelEleccionesCoverChange" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar iconos de servicios -->
+    <div id="iconModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Editar Icono de Servicio</h2>
+            <div class="form-group">
+                <label for="iconImageUrl">URL de la nueva imagen:</label>
+                <input type="text" id="iconImageUrl" placeholder="Ingresa la URL de la imagen" class="form-control">
+            </div>
+            <p>O</p>
+            <div class="form-group">
+                <label for="iconImageUpload">Subir imagen desde tu dispositivo:</label>
+                <input type="file" id="iconImageUpload" accept="image/*" class="form-control">
+            </div>
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button id="saveIconImage" class="btn">Guardar Cambios</button>
+                <button id="cancelIconChange" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox para imágenes y videos ampliados -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightbox-image">
+            <video controls id="lightbox-video" style="display: none;">
+                <source src="" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+        <div class="lightbox-nav">
+            <div class="lightbox-prev" id="lightbox-prev"><i class="fas fa-chevron-left"></i></div>
+            <div class="lightbox-next" id="lightbox-next"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </div>
+
+    <script>
+        // Navegación responsive
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            hamburger.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                hamburger.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Scroll suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#login') {
+                        showLoginModal();
+                        return;
+                    }
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Cambiar navbar al hacer scroll
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                const backToTop = document.querySelector('.back-to-top');
+                
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            // Botón volver arriba
+            document.querySelector('.back-to-top').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Formulario de contacto simplificado
+            document.getElementById('formulario-contacto').addEventListener('submit', function(e) {
+                e.preventDefault();
+                window.location.href = "mailto:estudiantesccup@gmail.com";
+            });
+            
+            // Funcionalidad de pestañas de carreras
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remover clase activa de todas las pestañas
+                    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                    // Añadir clase activa a la pestaña actual
+                    this.classList.add('active');
+                    
+                    // Ocultar todos los contenidos
+                    document.querySelectorAll('.carreras-content').forEach(c => c.classList.remove('active'));
+                    // Mostrar el contenido correspondiente
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Funcionalidad de administrador
+            const adminLoginBtn = document.getElementById('adminLoginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const loginModal = document.getElementById('loginModal');
+            const editModal = document.getElementById('editModal');
+            const videoModal = document.getElementById('videoModal');
+            const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+            const coverModal = document.getElementById('coverModal');
+            const eleccionesCoverModal = document.getElementById('eleccionesCoverModal');
+            const iconModal = document.getElementById('iconModal');
+            const loginForm = document.getElementById('loginForm');
+            const closeModals = document.querySelectorAll('.close-modal');
+            const saveChangesBtn = document.getElementById('saveChanges');
+            const saveAndExitBtn = document.getElementById('saveAndExit');
+            const uploadVideoBtn = document.getElementById('uploadVideo');
+            const cancelVideoBtn = document.getElementById('cancelVideo');
+            const confirmDeleteBtn = document.getElementById('confirmDelete');
+            const cancelDeleteBtn = document.getElementById('cancelDelete');
+            const changeCoverBtn = document.getElementById('changeCoverBtn');
+            const changeEleccionesCoverBtn = document.getElementById('changeEleccionesCoverBtn');
+            const saveCoverImage = document.getElementById('saveCoverImage');
+            const saveEleccionesCoverImage = document.getElementById('saveEleccionesCoverImage');
+            const saveIconImage = document.getElementById('saveIconImage');
+            const cancelCoverChange = document.getElementById('cancelCoverChange');
+            const cancelEleccionesCoverChange = document.getElementById('cancelEleccionesCoverChange');
+            const cancelIconChange = document.getElementById('cancelIconChange');
+            const coverImageUrl = document.getElementById('coverImageUrl');
+            const eleccionesCoverImageUrl = document.getElementById('eleccionesCoverImageUrl');
+            const iconImageUrl = document.getElementById('iconImageUrl');
+            const coverImageUpload = document.getElementById('coverImageUpload');
+            const eleccionesCoverImageUpload = document.getElementById('eleccionesCoverImageUpload');
+            const iconImageUpload = document.getElementById('iconImageUpload');
+            const fullCover = document.querySelector('.full-cover');
+            const eleccionesCover = document.querySelector('.elecciones-cover');
+            
+            // Lightbox
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            
+            let currentEditingElement = null;
+            let isAdmin = false;
+            let elementToDelete = null;
+            let currentMediaIndex = 0;
+            let mediaElements = [];
+            
+            // Mostrar modal de login
+            function showLoginModal() {
+                loginModal.style.display = 'flex';
+                document.getElementById('loginError').style.display = 'none';
+            }
+            
+            // Cerrar sesión
+            function logout() {
+                isAdmin = false;
+                document.body.classList.remove('admin-mode');
+                adminLoginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                alert('Has cerrado sesión correctamente.');
+            }
+            
+            // Cerrar modales
+            closeModals.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    loginModal.style.display = 'none';
+                    editModal.style.display = 'none';
+                    videoModal.style.display = 'none';
+                    confirmDeleteModal.style.display = 'none';
+                    coverModal.style.display = 'none';
+                    eleccionesCoverModal.style.display = 'none';
+                    iconModal.style.display = 'none';
+                });
+            });
+            
+            // Cerrar al hacer clic fuera del modal
+            window.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (e.target === editModal) {
+                    editModal.style.display = 'none';
+                }
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+                }
+                if (e.target === confirmDeleteModal) {
+                    confirmDeleteModal.style.display = 'none';
+                }
+                if (e.target === coverModal) {
+                    coverModal.style.display = 'none';
+                }
+                if (e.target === eleccionesCoverModal) {
+                    eleccionesCoverModal.style.display = 'none';
+                }
+                if (e.target === iconModal) {
+                    iconModal.style.display = 'none';
+                }
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // Login
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Credenciales: cecup / 1234
+                if (username === 'cecup' && password === '1234') {
+                    isAdmin = true;
+                    document.body.classList.add('admin-mode');
+                    loginModal.style.display = 'none';
+                    adminLoginBtn.style.display = 'none';
+                    logoutBtn.style.display = 'block';
+                    alert('Has iniciado sesión como administrador. Ahora puedes editar el contenido.');
+                    
+                    // Cargar datos guardados si existen
+                    loadSavedData();
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            });
+            
+            // Cerrar sesión
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+            
+            // Guardar datos en localStorage
+            function saveData() {
+                const data = {};
+                document.querySelectorAll('.editable').forEach(el => {
+                    const id = el.getAttribute('data-id');
+                    if (el.classList.contains('editable-image') || el.classList.contains('editable-icon')) {
+                        data[id] = el.src || el.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/, '$1');
+                    } else {
+                        data[id] = el.textContent;
+                    }
+                });
+                localStorage.setItem('cecupData', JSON.stringify(data));
+            }
+            
+            // Cargar datos guardados
+            function loadSavedData() {
+                const savedData = localStorage.getItem('cecupData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    for (const [id, content] of Object.entries(data)) {
+                        const element = document.querySelector(`[data-id="${id}"]`);
+                        if (element) {
+                            if (element.classList.contains('editable-image')) {
+                                element.src = content;
+                            } else if (element.classList.contains('editable-icon')) {
+                                element.style.backgroundImage = `url('${content}')`;
+                            } else {
+                                element.textContent = content;
+                            }
+                        }
+                    }
+                }
+                
+                // Cargar imagen de portada guardada
+                const savedCoverImage = localStorage.getItem('cecupCoverImage');
+                if (savedCoverImage) {
+                    fullCover.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${savedCoverImage}')`;
+                }
+                
+                // Cargar imagen de portada de elecciones guardada
+                const savedEleccionesCoverImage = localStorage.getItem('cecupEleccionesCoverImage');
+                if (savedEleccionesCoverImage) {
+                    eleccionesCover.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${savedEleccionesCoverImage}')`;
+                }
+            }
+            
+            // Efecto de partículas
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const eleccionesParticlesContainer = document.getElementById('elecciones-particles');
+                const particleCount = 30;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Tamaño aleatorio entre 2px y 5px
+                    const size = Math.random() * 3 + 2;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Posición inicial aleatoria
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    
+                    // Animación
+                    const duration = Math.random() * 20 + 10;
+                    const delay = Math.random() * 5;
+                    particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                    
+                    // Añadir al contenedor
+                    particlesContainer.appendChild(particle);
+                    
+                    // Crear partículas para la portada de elecciones
+                    if (eleccionesParticlesContainer) {
+                        const eleccionesParticle = particle.cloneNode(true);
+                        eleccionesParticlesContainer.appendChild(eleccionesParticle);
+                    }
+                }
+                
+                // Crear keyframes para la animación
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes float {
+                        0% {
+                            transform: translateY(0) translateX(0);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translateY(-100vh) translateX(${Math.random() > 0.5 ? '-' : ''}${Math.random() * 100}px);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Inicializar partículas
+            createParticles();
+            
+            // Mostrar modal para cambiar imagen de portada
+            changeCoverBtn.addEventListener('click', function() {
+                coverModal.style.display = 'flex';
+            });
+            
+            // Mostrar modal para cambiar imagen de portada de elecciones
+            if (changeEleccionesCoverBtn) {
+                changeEleccionesCoverBtn.addEventListener('click', function() {
+                    eleccionesCoverModal.style.display = 'flex';
+                });
+            }
+            
+            // Cerrar modal de portada
+            cancelCoverChange.addEventListener('click', function() {
+                coverModal.style.display = 'none';
+                coverImageUrl.value = '';
+                coverImageUpload.value = '';
+            });
+            
+            // Cerrar modal de portada de elecciones
+            if (cancelEleccionesCoverChange) {
+                cancelEleccionesCoverChange.addEventListener('click', function() {
+                    eleccionesCoverModal.style.display = 'none';
+                    eleccionesCoverImageUrl.value = '';
+                    eleccionesCoverImageUpload.value = '';
+                });
+            }
+            
+            // Guardar nueva imagen de portada
+            saveCoverImage.addEventListener('click', function() {
+                let imageUrl = coverImageUrl.value;
+                
+                // Si se subió un archivo, convertirlo a URL
+                if (coverImageUpload.files && coverImageUpload.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imageUrl = e.target.result;
+                        applyNewCover(imageUrl);
+                    };
+                    reader.readAsDataURL(coverImageUpload.files[0]);
+                } else if (imageUrl) {
+                    applyNewCover(imageUrl);
+                } else {
+                    alert('Por favor, ingresa una URL o selecciona una imagen');
+                    return;
+                }
+                
+                coverModal.style.display = 'none';
+            });
+            
+            // Guardar nueva imagen de portada de elecciones
+            if (saveEleccionesCoverImage) {
+                saveEleccionesCoverImage.addEventListener('click', function() {
+                    let imageUrl = eleccionesCoverImageUrl.value;
+                    
+                    // Si se subió un archivo, convertirlo a URL
+                    if (eleccionesCoverImageUpload.files && eleccionesCoverImageUpload.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            imageUrl = e.target.result;
+                            applyNewEleccionesCover(imageUrl);
+                        };
+                        reader.readAsDataURL(eleccionesCoverImageUpload.files[0]);
+                    } else if (imageUrl) {
+                        applyNewEleccionesCover(imageUrl);
+                    } else {
+                    alert('Por favor, ingresa una URL o selecciona una imagen');
+                    return;
+                }
+                
+                eleccionesCoverModal.style.display = 'none';
+            });
+        }
+        
+        // Aplicar nueva imagen de fondo
+        function applyNewCover(url) {
+            fullCover.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${url}')`;
+            
+            // Guardar en localStorage si está en modo admin
+            if (document.body.classList.contains('admin-mode')) {
+                localStorage.setItem('cecupCoverImage', url);
+            }
+        }
+        
+        // Aplicar nueva imagen de fondo de elecciones
+        function applyNewEleccionesCover(url) {
+            eleccionesCover.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${url}')`;
+            
+            // Guardar en localStorage si está en modo admin
+            if (document.body.classList.contains('admin-mode')) {
+                localStorage.setItem('cecupEleccionesCoverImage', url);
+            }
+        }
+        
+        // Hacer elementos editables
+        document.addEventListener('click', function(e) {
+            if (!isAdmin) return;
+            
+            const editableElement = e.target.closest('.editable');
+            const editableImage = e.target.closest('.editable-image');
+            const editableIcon = e.target.closest('.editable-icon');
+            const addMediaBtn = e.target.closest('.add-media-btn');
+            const uploadVideoBtn = e.target.closest('.upload-video-btn');
+            const deleteMediaBtn = e.target.closest('.delete-media-btn');
+            
+            if (editableElement) {
+                e.preventDefault();
+                currentEditingElement = editableElement;
+                document.getElementById('editContent').value = editableElement.textContent;
+                document.querySelector('.image-upload').style.display = 'none';
+                editModal.style.display = 'flex';
+            }
+            
+            if (editableImage) {
+                e.preventDefault();
+                currentEditingElement = editableImage;
+                document.getElementById('editContent').value = '';
+                document.querySelector('.image-upload').style.display = 'block';
+                editModal.style.display = 'flex';
+            }
+            
+            if (editableIcon) {
+                e.preventDefault();
+                e.stopPropagation();
+                currentEditingElement = editableIcon;
+                iconImageUrl.value = editableIcon.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/, '$1');
+                iconModal.style.display = 'flex';
+            }
+            
+            if (addMediaBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const mediaItem = addMediaBtn.closest('.galeria-item');
+                currentEditingElement = mediaItem.querySelector('img, video');
+                document.getElementById('editContent').value = '';
+                document.querySelector('.image-upload').style.display = 'block';
+                editModal.style.display = 'flex';
+            }
+            
+            if (uploadVideoBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                currentEditingElement = uploadVideoBtn.closest('.galeria-item');
+                videoModal.style.display = 'flex';
+            }
+            
+            if (deleteMediaBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                elementToDelete = deleteMediaBtn.closest('.galeria-item');
+                confirmDeleteModal.style.display = 'flex';
+            }
+        });
+        
+        // Guardar cambios
+        saveChangesBtn.addEventListener('click', function() {
+            if (!currentEditingElement) return;
+            
+            const newContent = document.getElementById('editContent').value;
+            
+            if (currentEditingElement.classList.contains('editable-image')) {
+                const fileInput = document.getElementById('editImage');
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentEditingElement.src = e.target.result;
+                        saveData(); // Guardar cambios
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            } else {
+                currentEditingElement.textContent = newContent;
+                saveData(); // Guardar cambios
+            }
+        });
+        
+        // Guardar y salir
+        saveAndExitBtn.addEventListener('click', function() {
+            saveChangesBtn.click();
+            editModal.style.display = 'none';
+            saveData(); // Guardar cambios antes de salir
+        });
+        
+        // Subir video
+        uploadVideoBtn.addEventListener('click', function() {
+            const videoFile = document.getElementById('videoFile').files[0];
+            const videoTitle = document.getElementById('videoTitle').value;
+            
+            if (videoFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const videoElement = currentEditingElement.querySelector('video') || document.createElement('video');
+                    videoElement.controls = true;
+                    videoElement.innerHTML = `<source src="${e.target.result}" type="${videoFile.type}">Tu navegador no soporta videos.`;
+                    
+                    if (!currentEditingElement.querySelector('video')) {
+                        currentEditingElement.innerHTML = '';
+                        currentEditingElement.appendChild(videoElement);
+                    }
+                    
+                    // Actualizar el tipo a video
+                    const tipoElement = currentEditingElement.querySelector('.tipo');
+                    if (tipoElement) {
+                        tipoElement.textContent = 'Video';
+                    }
+                    
+                    videoModal.style.display = 'none';
+                    saveData(); // Guardar cambios
+                };
+                reader.readAsDataURL(videoFile);
+            }
+        });
+        
+        // Cancelar subida de video
+        cancelVideoBtn.addEventListener('click', function() {
+            videoModal.style.display = 'none';
+        });
+        
+        // Confirmar eliminación
+        confirmDeleteBtn.addEventListener('click', function() {
+            if (elementToDelete) {
+                elementToDelete.remove();
+                saveData(); // Guardar cambios
+                confirmDeleteModal.style.display = 'none';
+            }
+        });
+        
+        // Cancelar eliminación
+        cancelDeleteBtn.addEventListener('click', function() {
+            confirmDeleteModal.style.display = 'none';
+            elementToDelete = null;
+        });
+        
+        // Guardar nuevo icono de servicio
+        saveIconImage.addEventListener('click', function() {
+            let imageUrl = iconImageUrl.value;
+            
+            // Si se subió un archivo, convertirlo a URL
+            if (iconImageUpload.files && iconImageUpload.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result;
+                    currentEditingElement.style.backgroundImage = `url('${imageUrl}')`;
+                    currentEditingElement.querySelector('i').style.display = 'none';
+                    saveData(); // Guardar cambios
+                };
+                reader.readAsDataURL(iconImageUpload.files[0]);
+            } else if (imageUrl) {
+                currentEditingElement.style.backgroundImage = `url('${imageUrl}')`;
+                currentEditingElement.querySelector('i').style.display = 'none';
+                saveData(); // Guardar cambios
+            } else {
+                alert('Por favor, ingresa una URL o selecciona una imagen');
+                return;
+            }
+            
+            iconModal.style.display = 'none';
+        });
+        
+        // Cancelar cambio de icono
+        cancelIconChange.addEventListener('click', function() {
+            iconModal.style.display = 'none';
+            iconImageUrl.value = '';
+            iconImageUpload.value = '';
+        });
+        
+        // Funcionalidad de Lightbox para imágenes y videos
+        function initLightbox() {
+            // Recoger todas las imágenes y videos que se pueden ampliar
+            const images = document.querySelectorAll('.editable-image, .servicio-imagen img, .hero-image img, .ivu-image img, .cecup-image img, .elecciones-image img, .noticia-image img');
+            const videos = document.querySelectorAll('video');
+            
+            // Agregar eventos a las imágenes
+            images.forEach((img, index) => {
+                img.addEventListener('click', function(e) {
+                    if (isAdmin) return; // No abrir lightbox en modo admin
+                    e.preventDefault();
+                    currentMediaIndex = index;
+                    mediaElements = [...images]; // Convertir NodeList a Array
+                    openLightbox(this.src, 'image', this.alt);
+                });
+            });
+            
+            // Agregar eventos a los videos
+            videos.forEach((video, index) => {
+                if (video.parentElement.classList.contains('galeria-item')) {
+                    video.addEventListener('click', function(e) {
+                        if (isAdmin) return; // No abrir lightbox en modo admin
+                        e.preventDefault();
+                        currentMediaIndex = images.length + index;
+                        mediaElements = [...images, ...videos]; // Combinar imágenes y videos
+                        const source = video.querySelector('source');
+                        openLightbox(source ? source.src : '', 'video', 'Video');
+                    });
+                }
+            });
+            
+            // Eventos para navegación en lightbox
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', showPrevMedia);
+            lightboxNext.addEventListener('click', showNextMedia);
+            
+            // Eventos de teclado
+            document.addEventListener('keydown', function(e) {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowLeft') {
+                        showPrevMedia();
+                    } else if (e.key === 'ArrowRight') {
+                        showNextMedia();
+                    }
+                }
+            });
+        }
+        
+        // Abrir lightbox
+        function openLightbox(src, type, caption) {
+            if (type === 'image') {
+                lightboxImage.src = src;
+                lightboxImage.style.display = 'block';
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+            } else if (type === 'video') {
+                lightboxVideo.querySelector('source').src = src;
+                lightboxVideo.load();
+                lightboxImage.style.display = 'none';
+                lightboxVideo.style.display = 'block';
+                lightboxVideo.play();
+            }
+            
+            lightboxCaption.textContent = caption || '';
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Evitar scroll del body
+        }
+        
+        // Cerrar lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightboxVideo.pause();
+            document.body.style.overflow = ''; // Restaurar scroll del body
+        }
+        
+        // Mostrar elemento anterior en lightbox
+        function showPrevMedia() {
+            if (mediaElements.length === 0) return;
+            
+            currentMediaIndex = (currentMediaIndex - 1 + mediaElements.length) % mediaElements.length;
+            const element = mediaElements[currentMediaIndex];
+            
+            if (element.tagName === 'IMG') {
+                openLightbox(element.src, 'image', element.alt);
+            } else if (element.tagName === 'VIDEO') {
+                const source = element.querySelector('source');
+                openLightbox(source ? source.src : '', 'video', 'Video');
+            }
+        }
+        
+        // Mostrar siguiente elemento en lightbox
+        function showNextMedia() {
+            if (mediaElements.length === 0) return;
+            
+            currentMediaIndex = (currentMediaIndex + 1) % mediaElements.length;
+            const element = mediaElements[currentMediaIndex];
+            
+            if (element.tagName === 'IMG') {
+                openLightbox(element.src, 'image', element.alt);
+            } else if (element.tagName === 'VIDEO') {
+                const source = element.querySelector('source');
+                openLightbox(source ? source.src : '', 'video', 'Video');
+            }
+        }
+        
+        // Inicializar lightbox
+        initLightbox();
+        
+        // Activar enlace activo según scroll
+        const sections = document.querySelectorAll('section');
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${current}`) {
+                    a.classList.add('active');
+                }
+            });
+        });
+        
+        // Funcionalidad de "Ver más" en servicios
+        document.querySelectorAll('.ver-mas-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const detalles = this.nextElementSibling;
+                detalles.classList.toggle('active');
+                this.textContent = detalles.classList.contains('active') ? 'Ver menos' : 'Ver más';
+            });
+        });
+    });
+</script>
+</body>
+</html>
